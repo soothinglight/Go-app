@@ -1,0 +1,39 @@
+<article>
+    <header>
+        <hgroup>
+            <h1>Dashboard</h1>
+            <h2>Welcome, {{.User.Email}}!</h2>
+        </hgroup>
+        
+        <form hx-post="/logout" hx-target="#app" hx-swap="innerHTML" style="display: inline;">
+            <button type="submit" class="secondary">Logout</button>
+        </form>
+    </header>
+    
+    <section>
+        <h3>Add New Item</h3>
+        <form hx-post="/items" hx-target="#item-list" hx-swap="outerHTML">
+            <fieldset role="group">
+                <input type="text" name="name" placeholder="Enter item name..." required>
+                <button type="submit">Add Item</button>
+            </fieldset>
+        </form>
+    </section>
+    
+    <section>
+        <h3>Your Items</h3>
+        
+        <div class="search-container">
+            <input type="text" 
+                   placeholder="Search items..." 
+                   hx-get="/items" 
+                   hx-target="#item-list" 
+                   hx-trigger="keyup changed delay:300ms"
+                   name="search">
+        </div>
+        
+        <div id="item-list" hx-get="/items" hx-trigger="load">
+            <div class="empty-state">Loading items...</div>
+        </div>
+    </section>
+</article>
